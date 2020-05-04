@@ -24,8 +24,10 @@ function pickDate() {
         month: 'long' 
     }
     let date = new Date();
+    let dateString = date.toLocaleDateString('ru', options);
+    let upperDateString = dateString.split(' ');
 
-    document.getElementById("span").textContent = `${date.toLocaleDateString('ru', options)}`;
+    document.getElementById("span").textContent = `${upperDateString[0][0].toUpperCase()}${upperDateString[0].slice(1)} ${upperDateString[1]} ${upperDateString[2][0].toUpperCase()}${upperDateString[2].slice(1)}`;
 }
 
 pickDate();
