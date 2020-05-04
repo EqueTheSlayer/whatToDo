@@ -1,0 +1,121 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: gainsboro;
+}
+
+.contentArea {
+    background-color: white;
+    width: 20%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+}
+
+.header {
+    height: 35%;
+    width: 100%;
+}
+
+.header img {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    filter: brightness(70%);
+}
+
+.header span {
+    color: white;
+    font-size: 25px;
+    position: relative;
+    bottom: 50px;
+    margin-left: 10px;    
+    font-family: 'Merriweather', serif;
+}
+
+.mainInfo {
+    width: 100%;
+    height: 55%;
+    display: flex;
+    flex-direction: column;
+}
+
+.toDoBlock {
+    width: 100%;
+    height: 10%;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.addButton {
+    color: green;
+}
+
+.deleteButton {
+    color: crimson;
+}
+
+.deleteButton, .addButton {
+    outline: none;
+    border: none;
+    background-color: white;
+    width: 10%;
+    height: 100%;
+    font-size: 30px;
+}
+
+.deleteButton:hover, .addButton:hover {
+    cursor: pointer;
+}
+
+.field {
+    width: 80%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding-left: 5px;
+    font-family: 'Merriweather', serif;
+    border-radius: 5px;
+}
+
+.field:focus{
+    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.25);
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+}
+
+.footer button {
+    background-color: white;
+    color: grey;
+    font-size: 30px;
+    height: 70%;
+    width: 20%;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.footer button:hover {
+    cursor: pointer;
+}
+
