@@ -42,8 +42,8 @@ function editElement() {
     li.appendChild(text);
     btn.classList.add('deleteButton');
     btn.textContent = '-';
-    if (inputValue == '') {
-        alert('Нельзя добавить пустое дело.');
+    if (inputValue.search(/^\s*$/) != -1) {
+        alert('Нельзя начать дело с пробелов, или добавить пустое дело');
     } else {
         div.appendChild(btn);
         div.appendChild(li);
@@ -58,11 +58,14 @@ function editElement() {
     btn.addEventListener('click', (e) => {
         const item = e.target;
 
-        if(item.classList[0] === 'deleteButton') {
+        if (item.classList[0] === 'deleteButton') {
             const todo = item.parentElement;
             todo.remove();
             deleteToDos(todo);
         }
+    })
+    li.addEventListener('click', () => {
+        li.classList.toggle('completedTasks');
     })
 }
 
@@ -71,7 +74,7 @@ document.addEventListener('DOMContentLoaded', getToDos);
 function saveToDos(todo) {
     let todos;
 
-    if(localStorage.getItem('todos') === null) {
+    if (localStorage.getItem('todos') === null) {
         todos = [];
     } else {
         todos = JSON.parse(localStorage.getItem('todos'));
@@ -84,7 +87,7 @@ function saveToDos(todo) {
 function getToDos(todo) {
     let todos;
 
-    if(localStorage.getItem('todos') === null) {
+    if (localStorage.getItem('todos') === null) {
         todos = [];
     } else {
         todos = JSON.parse(localStorage.getItem('todos'));
@@ -96,7 +99,7 @@ function getToDos(todo) {
         let inputValue = todo;
         let text = document.createTextNode(inputValue);
         let refreshBtn = document.getElementById('refresh');
-    
+
         div.classList.add('toDo');
         li.appendChild(text);
         btn.classList.add('deleteButton');
@@ -114,8 +117,8 @@ function getToDos(todo) {
         });
         btn.addEventListener('click', (e) => {
             const item = e.target;
-    
-            if(item.classList[0] === 'deleteButton') {
+
+            if (item.classList[0] === 'deleteButton') {
                 const todo = item.parentElement;
                 todo.remove();
                 deleteToDos(todo);
@@ -128,7 +131,7 @@ function deleteToDos(todo) {
     let todos;
 
     console.log(todo)
-    if(localStorage.getItem('todos') === null) {
+    if (localStorage.getItem('todos') === null) {
         todos = [];
     } else {
         todos = JSON.parse(localStorage.getItem('todos'));
