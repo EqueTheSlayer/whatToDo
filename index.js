@@ -52,6 +52,8 @@ function editElement() {
         li.addEventListener('click', () => {
             li.classList.toggle('li');
             li.classList.toggle('completedTasks');
+            console.log(li)
+            saveToDos(li);
         })
         saveToDos(inputValue);
     }
