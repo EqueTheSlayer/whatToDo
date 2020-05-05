@@ -123,7 +123,7 @@
     cursor: pointer;
 }
 
-li {
+.li {
     display: relative;
     list-style-type: none;
     border-radius: 5px;
@@ -158,6 +158,16 @@ li {
     background: linear-gradient(90deg, rgba(55,134,51,1) 0%, rgba(30,199,21,1) 53%, rgba(55,134,51,1) 100%);
     color: black;
     font-family: 'Merriweather', serif;
+    display: relative;
+    list-style-type: none;
+    border-radius: 5px;
+    width: 80%;
+    padding: 5px;
+    font-family: 'Merriweather', serif;
+    text-align: center;
+    background-color: gainsboro;
+    margin-top: 5px;
+    margin-right: 10%;
 
 }
 

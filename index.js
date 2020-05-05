@@ -32,6 +32,7 @@ function pickDate() {
 
 function editElement() {
     let li = document.createElement('li');
+    li.classList.add('li');
     let div = document.createElement('div');
     let btn = document.createElement('button');
     let inputValue = document.getElementById('field').value;
@@ -48,6 +49,10 @@ function editElement() {
         div.appendChild(btn);
         div.appendChild(li);
         document.getElementById('list').appendChild(div);
+        li.addEventListener('click', () => {
+            li.classList.toggle('li');
+            li.classList.toggle('completedTasks');
+        })
         saveToDos(inputValue);
     }
     document.getElementById('field').value = '';
@@ -63,9 +68,6 @@ function editElement() {
             todo.remove();
             deleteToDos(todo);
         }
-    })
-    li.addEventListener('click', () => {
-        li.classList.toggle('completedTasks');
     })
 }
 
@@ -94,11 +96,13 @@ function getToDos(todo) {
     }
     todos.forEach(todo => {
         let li = document.createElement('li');
+        li.classList.add('li');
         let div = document.createElement('div');
         let btn = document.createElement('button');
         let inputValue = todo;
         let text = document.createTextNode(inputValue);
         let refreshBtn = document.getElementById('refresh');
+        
 
         div.classList.add('toDo');
         li.appendChild(text);
@@ -110,6 +114,10 @@ function getToDos(todo) {
             div.appendChild(btn);
             div.appendChild(li);
             document.getElementById('list').appendChild(div);
+            li.addEventListener('click', () => {
+                li.classList.toggle('li');
+                li.classList.toggle('completedTasks');
+            })
         }
         refreshBtn.addEventListener('click', () => {
             div.remove();
