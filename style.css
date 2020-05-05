@@ -17,8 +17,8 @@
 
 .contentArea {
     background-color: white;
-    width: 20%;
-    height: 70%;
+    width: 350px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     border-radius: 30px;
