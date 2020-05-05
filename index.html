@@ -18,13 +18,13 @@
             </div>
             <div class='mainInfo'>
                 <div class='toDoBlock'>
-                    <button class='addButton'>+</button>
-                    <input type='text' class='field' maxlength='39'>
-                    <button class='deleteButton'>-</button>
+                    <input type='text' id='field' placeholder='Введите ваше дело' maxlength='39'>
+                    <button class='addButton' onclick='editElement()'>+</button>
                 </div>
+                <ul id='list'></ul>
             </div>
             <div class='footer'>
-                <button>↻</button>
+                <button id='refresh'>↻</button>
             </div>
         </div>
     </div>

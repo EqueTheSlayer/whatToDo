@@ -9,7 +9,7 @@ function pickImages() {
     let date = new Date();
     let hours = date.getHours();
     let i = 0;
-    
+
     if (hours > 6 && hours < 12) i = 0;
     if (hours >= 12 && hours < 18) i = 1;
     if (hours >= 18 && hours < 0) i = 2;
@@ -20,8 +20,8 @@ function pickImages() {
 function pickDate() {
     let options = {
         weekday: 'long',
-        day: 'numeric',   
-        month: 'long' 
+        day: 'numeric',
+        month: 'long'
     }
     let date = new Date();
     let dateString = date.toLocaleDateString('ru', options);
@@ -30,7 +30,118 @@ function pickDate() {
     document.getElementById("span").textContent = `${upperDateString[0][0].toUpperCase()}${upperDateString[0].slice(1)} ${upperDateString[1]} ${upperDateString[2][0].toUpperCase()}${upperDateString[2].slice(1)}`;
 }
 
+function editElement() {
+    let li = document.createElement('li');
+    let div = document.createElement('div');
+    let btn = document.createElement('button');
+    let inputValue = document.getElementById('field').value;
+    let text = document.createTextNode(inputValue);
+    let refreshBtn = document.getElementById('refresh');
+
+    div.classList.add('toDo');
+    li.appendChild(text);
+    btn.classList.add('deleteButton');
+    btn.textContent = '-';
+    if (inputValue == '') {
+        alert('Нельзя добавить пустое дело.');
+    } else {
+        div.appendChild(btn);
+        div.appendChild(li);
+        document.getElementById('list').appendChild(div);
+        saveToDos(inputValue);
+    }
+    document.getElementById('field').value = '';
+    refreshBtn.addEventListener('click', () => {
+        div.remove();
+        localStorage.clear();
+    });
+    btn.addEventListener('click', (e) => {
+        const item = e.target;
+        console.log(item)
+
+        if(item.classList[0] === 'deleteButton') {
+            const todo = item.parentElement;
+            todo.remove();
+            deleteToDos(todo);
+        }
+    })
+}
+
+document.addEventListener('DOMContentLoaded', getToDos);
+
+function saveToDos(todo) {
+    let todos;
+
+    if(localStorage.getItem('todos') === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    todos.push(todo);
+    localStorage.setItem('todos', JSON.stringify(todos));
+
+}
+
+function getToDos(todo) {
+    let todos;
+
+    if(localStorage.getItem('todos') === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    todos.forEach(todo => {
+        let li = document.createElement('li');
+        let div = document.createElement('div');
+        let btn = document.createElement('button');
+        let inputValue = todo;
+        let text = document.createTextNode(inputValue);
+        let refreshBtn = document.getElementById('refresh');
+    
+        div.classList.add('toDo');
+        li.appendChild(text);
+        btn.classList.add('deleteButton');
+        btn.textContent = '-';
+        if (inputValue == '') {
+            alert('Нельзя добавить пустое дело.');
+        } else {
+            div.appendChild(btn);
+            div.appendChild(li);
+            document.getElementById('list').appendChild(div);
+        }
+        refreshBtn.addEventListener('click', () => {
+            div.remove();
+            localStorage.clear();
+        });
+        btn.addEventListener('click', (e) => {
+            const item = e.target;
+            console.log(item)
+    
+            if(item.classList[0] === 'deleteButton') {
+                const todo = item.parentElement;
+                todo.remove();
+                deleteToDos(todo);
+            }
+        })
+    });
+}
+
+function deleteToDos(todo) {
+    let todos;
+
+    if(localStorage.getItem('todos') === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    const toDoIndex = todo.children[0].textContent;
+    todos.splice(todos.indexOf(toDoIndex), 1);
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+
+
 pickDate();
 pickImages();
 setInterval(pickImages, 1000);
-setInterval(pickDate, 1000)
+setInterval(pickDate, 1000);
