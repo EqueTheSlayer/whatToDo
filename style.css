@@ -144,7 +144,6 @@ li {
 
 .toDo {
     width: 100%;
-    height: 12%;
     display: flex;
     flex-direction: row;
 }
