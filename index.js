@@ -57,7 +57,6 @@ function editElement() {
     });
     btn.addEventListener('click', (e) => {
         const item = e.target;
-        console.log(item)
 
         if(item.classList[0] === 'deleteButton') {
             const todo = item.parentElement;
@@ -115,7 +114,6 @@ function getToDos(todo) {
         });
         btn.addEventListener('click', (e) => {
             const item = e.target;
-            console.log(item)
     
             if(item.classList[0] === 'deleteButton') {
                 const todo = item.parentElement;
@@ -129,12 +127,13 @@ function getToDos(todo) {
 function deleteToDos(todo) {
     let todos;
 
+    console.log(todo)
     if(localStorage.getItem('todos') === null) {
         todos = [];
     } else {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
-    const toDoIndex = todo.children[0].textContent;
+    const toDoIndex = todo.children[1].textContent;
     todos.splice(todos.indexOf(toDoIndex), 1);
     localStorage.setItem('todos', JSON.stringify(todos));
 }
