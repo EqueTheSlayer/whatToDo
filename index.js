@@ -30,7 +30,7 @@ function pickDate() {
     document.getElementById("span").textContent = `${upperDateString[0][0].toUpperCase()}${upperDateString[0].slice(1)} ${upperDateString[1]} ${upperDateString[2][0].toUpperCase()}${upperDateString[2].slice(1)}`;
 }
 
-function editElement() {
+function addToDo() {
     let li = document.createElement('li');
     li.classList.add('li');
     let div = document.createElement('div');
@@ -102,23 +102,19 @@ function getToDos(todo) {
         let inputValue = todo;
         let text = document.createTextNode(inputValue);
         let refreshBtn = document.getElementById('refresh');
-        
+
 
         div.classList.add('toDo');
         li.appendChild(text);
         btn.classList.add('deleteButton');
         btn.textContent = '-';
-        if (inputValue.search(/^\s*$/) != -1) {
-            alert('Нельзя начать дело с пробелов, или добавить пустое дело');
-        } else {
-            div.appendChild(btn);
-            div.appendChild(li);
-            document.getElementById('list').appendChild(div);
-            li.addEventListener('click', () => {
-                li.classList.toggle('li');
-                li.classList.toggle('complete');
-            })
-        }
+        div.appendChild(btn);
+        div.appendChild(li);
+        document.getElementById('list').appendChild(div);
+        li.addEventListener('click', () => {
+            li.classList.toggle('li');
+            li.classList.toggle('complete');
+        })
         refreshBtn.addEventListener('click', () => {
             div.remove();
             localStorage.clear();
