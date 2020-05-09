@@ -51,9 +51,7 @@ function editElement() {
         document.getElementById('list').appendChild(div);
         li.addEventListener('click', () => {
             li.classList.toggle('li');
-            li.classList.toggle('completedTasks');
-            console.log(li)
-            saveToDos(li);
+            li.classList.toggle('complete');
         })
         saveToDos(inputValue);
     }
@@ -110,15 +108,15 @@ function getToDos(todo) {
         li.appendChild(text);
         btn.classList.add('deleteButton');
         btn.textContent = '-';
-        if (inputValue == '') {
-            alert('Нельзя добавить пустое дело.');
+        if (inputValue.search(/^\s*$/) != -1) {
+            alert('Нельзя начать дело с пробелов, или добавить пустое дело');
         } else {
             div.appendChild(btn);
             div.appendChild(li);
             document.getElementById('list').appendChild(div);
             li.addEventListener('click', () => {
                 li.classList.toggle('li');
-                li.classList.toggle('completedTasks');
+                li.classList.toggle('complete');
             })
         }
         refreshBtn.addEventListener('click', () => {
