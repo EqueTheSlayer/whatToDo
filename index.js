@@ -30,46 +30,15 @@ function pickDate() {
     document.getElementById("span").textContent = `${upperDateString[0][0].toUpperCase()}${upperDateString[0].slice(1)} ${upperDateString[1]} ${upperDateString[2][0].toUpperCase()}${upperDateString[2].slice(1)}`;
 }
 
-// if (inputValue.search(/^\s*$/) != -1) {
-//     alert('Нельзя начать дело с пробелов, или добавить пустое дело');
-// } else {
+function addToDo() {
+    let li = document.createElement('li');
+    li.classList.add('li');
+    let div = document.createElement('div');
+    let btn = document.createElement('button');
+    let inputValue = document.getElementById('field').value;
+    let text = document.createTextNode(inputValue);
+    let refreshBtn = document.getElementById('refresh');
 
-const refreshBtn = document.getElementById('refresh');
-const list = document.getElementById('list');
-const input = document.getElementById('field');
-let li = document.createElement('li');
-let div = document.createElement('div');
-li.classList.add('li');
-let inputValue = document.getElementById('field').value;
-let text = document.createTextNode(inputValue);
-let btn = document.createElement('button');
-let LIST, id;
-
-let data = localStorage.getItem('TODO');
-
-if (data) {
-    LIST = JSON.parse(data);
-    id = LIST.length;
-    loadList(LIST);
-} else {
-    LIST = [];
-    id = 0;
-}
-
-function loadList(array) {
-    array.forEach(function (item) {
-        addToDo(item.id);
-    });
-}
-
-refreshBtn.addEventListener('click', function () {
-    localStorage.clear();
-    location.reload();
-});
-
-
-function addToDo(id) {
-    const position = 'beforeend';
     div.classList.add('toDo');
     li.appendChild(text);
     btn.classList.add('deleteButton');
@@ -80,63 +49,105 @@ function addToDo(id) {
         div.appendChild(btn);
         div.appendChild(li);
         document.getElementById('list').appendChild(div);
-
-        list.insertAdjacentHTML(position, item);
+        li.addEventListener('click', () => {
+            li.classList.toggle('li');
+            li.classList.toggle('complete');
+        })
+        saveToDos(inputValue);
     }
+    document.getElementById('field').value = '';
+    refreshBtn.addEventListener('click', () => {
+        div.remove();
+        localStorage.clear();
+    });
+    btn.addEventListener('click', (e) => {
+        const item = e.target;
+
+        if (item.classList[0] === 'deleteButton') {
+            const todo = item.parentElement;
+            todo.remove();
+            deleteToDos(todo);
+        }
+    })
 }
 
-    // add an item to the list user the enter key
-    document.addEventListener("keyup", function (even) {
-        if (event.keyCode == 13) {
-            const toDo = input.value;
+document.addEventListener('DOMContentLoaded', getToDos);
 
-            // if the input isn't empty
-            if (toDo) {
-                addToDo(toDo, id, false);
+function saveToDos(todo) {
+    let todos;
 
-                LIST.push({
-                    name: toDo,
-                    id: id,
-                    done: false
-                });
+    if (localStorage.getItem('todos') === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    todos.push(todo);
+    localStorage.setItem('todos', JSON.stringify(todos));
 
-                // add item to localstorage ( this code must be added where the LIST array is updated)
-                localStorage.setItem("TODO", JSON.stringify(LIST));
+}
 
-                id++;
-                console.log(id)
+function getToDos(todo) {
+    let todos;
+
+    if (localStorage.getItem('todos') === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    todos.forEach(todo => {
+        let li = document.createElement('li');
+        li.classList.add('li');
+        let div = document.createElement('div');
+        let btn = document.createElement('button');
+        let inputValue = todo;
+        let text = document.createTextNode(inputValue);
+        let refreshBtn = document.getElementById('refresh');
+
+
+        div.classList.add('toDo');
+        li.appendChild(text);
+        btn.classList.add('deleteButton');
+        btn.textContent = '-';
+        div.appendChild(btn);
+        div.appendChild(li);
+        document.getElementById('list').appendChild(div);
+        li.addEventListener('click', () => {
+            li.classList.toggle('li');
+            li.classList.toggle('complete');
+        })
+        refreshBtn.addEventListener('click', () => {
+            div.remove();
+            localStorage.clear();
+        });
+        btn.addEventListener('click', (e) => {
+            const item = e.target;
+
+            if (item.classList[0] === 'deleteButton') {
+                const todo = item.parentElement;
+                todo.remove();
+                deleteToDos(todo);
             }
-            input.value = "";
-        }
+        })
     });
+}
 
+function deleteToDos(todo) {
+    let todos;
 
-    // complete to do
-    function completeToDo(element) {
-        element.classList.toggle('li');
-        element.classList.toggle('complete');
-        console.log(element)
-        LIST[element.id].done = LIST[element.id].done ? false : true;
+    console.log(todo)
+    if (localStorage.getItem('todos') === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
     }
-
-    // remove to do
-    function removeToDo(element) {
-        element.parentNode.parentNode.removeChild(element.parentNode);
-
-        LIST[element.id].trash = true;
-    }
-
-    // target the items created dynamically
-
-    li.addEventListener("click", function (event) {
-        const element = event.target; // return the clicked element inside list  // complete or delet
-        completeToDo(element);
-        // add item to localstorage ( this code must be added where the LIST array is updated)
-        localStorage.setItem("TODO", JSON.stringify(LIST));
-    });
+    const toDoIndex = todo.children[1].textContent;
+    todos.splice(todos.indexOf(toDoIndex), 1);
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
 
 
-    pickDate();
-    pickImages();
-    setInterval(pickImages, 1000);
-    setInterval(pickDate, 1000);
+
+pickDate();
+pickImages();
+setInterval(pickImages, 1000);
+setInterval(pickDate, 1000);
