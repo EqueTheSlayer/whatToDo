@@ -101,7 +101,7 @@ function getToDos(todo) {
             document.getElementById('list').appendChild(div);
             li.addEventListener('click', () => {
                 li.classList.toggle('li');
-                li.classList.toggle('completedTasks');
+                li.classList.toggle('complete');
             })
         }
         refreshBtn.addEventListener('click', () => {
