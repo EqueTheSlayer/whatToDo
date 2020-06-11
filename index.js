@@ -44,7 +44,7 @@ function editElement() {
         document.getElementById('list').appendChild(div);
         li.addEventListener('click', () => {
             li.classList.toggle('li');
-            li.classList.toggle('completedTasks');
+            li.classList.toggle('complete');
         })
         saveToDos(inputValue);
     }
